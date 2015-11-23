@@ -48,7 +48,7 @@ int ver = 1;
 int main(int argc, char *argv[]) {
 	int conex; /*file bandera para saber si el archivo se creó*/
 	
-	SetConsoleTitle("Version: %d", ver);
+	SetConsoleTitle("Version: 1");
 	system("pause");
 
 }
