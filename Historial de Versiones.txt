@@ -1,0 +1,5 @@
+
+
+================Historial de Versiones================
+
+Versión 1: Detectar y conectar con el servidor mysql. Crear un archivo de configuración llamado "config.txt".
