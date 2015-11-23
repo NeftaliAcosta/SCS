@@ -42,17 +42,278 @@ char d[20]="";
 char consulta0[1024];
 int contador;
 int canal;
-int ver = 1;
+
 
 
 int main(int argc, char *argv[]) {
 	int conex; /*file bandera para saber si el archivo se creó*/
 	
 	SetConsoleTitle("Version: 1");
-	system("pause");
+	conex=loadfile(conex);  /*Se dectecta si el archivo config existe al iniciar el programa*/
+	if (conex==0){ /*Valido si la conexión fue exitosa, si no es exitosa salgo del programa*/
+		goto exit;
+	}
+	
+	system("cls");
+	menu();
+	
+	exit:
+		printf("\nSaliendo del Sistema...");
+		Sleep(2000);
 
 }
 
 
+int loadfile(int conex){
+	FILE *fp;
+	char crear;
+	char resp;
+	int con;
 
+	 fp = fopen ("config.txt", "r");
+	  if (fp==NULL){
+	  	
+	  	do{
+		  system("cls");
+	  	printf("============ERROR============\n");
+   			printf("El archivo de configuracin no existe \nDesea crearlo?\n");
+   			printf("A=Crear archivo \t B.Salir");
+   			printf("\nEsperando opcion: >");
+   			resp=getche();
+   			
+   		
+		   	
+		   	
+   			switch(resp){
+   				
+   				case 'a':
+				   		conex=newfile(con); /*Si el archivo no existe se  manda a crear*/
+				   		resp='b';
+				   		
+				   		break;
+				case 'b':
+					 	resp='b';
+					 
+						break;
+				default:   	
+						printf("\nOpcion Invalida\n");
+						break;
+   				
+			   }
+			 
+			   
+		  
+		  }while(resp!='b');
+	  		
+	  			}
+				  else{ 
+   					printf("\nArchivo config encontrado\n");
+   					Sleep(100);
+   					conex=readfile(con);  /*Si el archivo existe lee la configuración*/
+   					
+   					}
+	
+		
+		     
+		     
+		 Sleep(100);
+			return conex;
+}
+
+
+/*LEE LA CONFIGURACION DE CONEXION A LA BD*/
+int readfile(int con){
+	 
+	 FILE *fp;
+	 char caracteres[20];
+	 int i,x;
+	
+	 fp = fopen ("config.txt", "r");
+	 
+	 if (fp == NULL)
+ 		exit(1);
+ 	x=0;
+ 	 printf("\nleyendo configuracion...\n");
+ 	 Sleep(100);
+	 while (feof(fp) == 0)
+	    {
+		fgets(caracteres,20,fp);
+		/*printf("%c",caracter);*/
+		 i=0;
+		 
+		    if (x==0){
+			while(caracteres[i]!='\n'){
+		  			a[i]=caracteres[i];
+		  			i++;
+		  }
+			}
+			
+			
+			
+			if (x==1){
+			while(caracteres[i]!='\n'){
+		  			b[i]=caracteres[i];
+		  			i++;
+		  }
+			}
+			
+			if (x==2){
+			while(caracteres[i]!='\n'){
+		  			c[i]=caracteres[i];
+		  			i++;
+		  }
+			}
+			
+			
+			if (x==3){
+			while(caracteres[i]!='\n'){
+		  			d[i]=caracteres[i];
+		  			i++;
+		  }
+			}
+			
+		i=0;
+		x++;	
+	    }
+	    
+	    
+
+	    
+	 printf("\nEstableciendo conexion con el server...\n");
+ 	 Sleep(1000);
+ 	 server = a;
+     user = b;
+     password= c;
+     database= d;
+     
+	 conn = mysql_init(NULL);
+	 
+	if (!mysql_real_connect(conn,server,user,password,database,0,NULL,0)){
+		
+		fprintf(stderr,"\n%s\n",mysql_error(conn));
+		con=0;
+		Sleep(100);
+	}
+	else{
+		printf("\nConexion establecida...\n");
+		con=1;
+		Sleep(100);
+	} 		
+ 		
+ 	
+	 	
+	 return con;	
+}
+
+
+/*CREA ARCHIVO DE CONFIGURACION A LA BD*/
+int newfile(int con){
+	
+
+	  FILE *fp;
+	  system("cls");
+	  printf("\nCreando configuracion del Servidor\n");
+	  Sleep(1000);
+	  printf("\nIngrese la ip del servidor: ");
+	  scanf("%s", &a);
+	  printf("\nIngrese el nombre de usuario: ");
+	  scanf("%s", &b);
+	  printf("\nIngrese el password: ");
+	  scanf("%s", &c);
+	  printf("\nIngrese el nombre de la BD: ");
+	  scanf("%s", &d);
+
+  	  fp = fopen ("config.txt", "w");
+  	
+   			fprintf(fp, "%s\n%s\n%s\n%s\n",a,b,c,d);
+	  		 fclose(fp);
+	  		 printf("\n El archivo se creo correctamente\n");
+	  		 Sleep(1000);
+		   
+	  	 
+	
+     server = a;
+     user = b;
+     password= c;
+     database= d;
+     
+    /* printf("\n%s\n",server);
+     printf("\n%s\n",user);
+     printf("\n%s\n",password);
+     printf("\n%s\n",database);
+	  system("pause");
+	  */
+	  
+	  
+	  	 conn = mysql_init(NULL);
+	 
+	if (!mysql_real_connect(conn,server,user,password,database,0,NULL,0)){
+		
+		fprintf(stderr,"\n%s\n",mysql_error(conn));
+		con=0;
+		system("pause");
+	}
+	else{
+		printf("\nConexion establecida...\n");
+		con=1;
+		Sleep(400);
+	} 		
+ 	
+ 	return con;
+}
+
+
+menu(){ /*Inicio del nenú*/
+
+ char resp;
+	int consul;
+	
+
+	
+	/*ESTADISTICAS DEL SISTEMA*/
+
+	do{
+	system("cls");
+	
+	printf("\t\t-----------MENU------------\n\n");
+
+	printf("\t\t---------------------------\n");
+	printf("\t\t a. Ingresar Registro	\n\t\t b. Registros \n\t\t c. Estadisticas \n\t\t x. Salir");
+	printf("\n\t\t Esperando respuesta->");
+	resp=getche();
+	
+	switch(resp){
+		case 'a':
+				system("cls");
+			/*	alta();*/
+				system("pause");
+				break;
+				
+		case 'b':
+				system("cls");
+						
+				/*consulta();*/
+				system("pause");
+				break;
+		
+		case 'c':			
+				system("cls");
+				
+			/*	registros();*/
+				system("pause");
+				break;
+				
+		case 'x':
+				system("cls");
+				break;			
+				
+		default:
+				system("cls");
+				printf("\n Opcipon Incorrecta\n");
+				system("pause");
+				break;			
+	}
+	
+	}while(resp!='x');
+} /*Fin del menú*/
 
