@@ -27,9 +27,28 @@ Una vez guardada la configuración, leer la configuración, establer conxión y abr
 #include <windows.h>
 
 
+/*=========VARIABLES GLOBALES=========*/
+MYSQL *conn, mysql;
+MYSQL_RES *res;
+MYSQL_ROW row;
+char *server;
+char *user;
+char *password;
+char *database;
+char a[20]="";
+char b[20]="";
+char c[20]="";
+char d[20]="";
+char consulta0[1024];
+int contador;
+int canal;
+int ver = 1;
+
 
 int main(int argc, char *argv[]) {
-	SetConsoleTitle("Version 1");
+	int conex; /*file bandera para saber si el archivo se creó*/
+	
+	SetConsoleTitle("Version: %d", ver);
 	system("pause");
 
 }

@@ -51,7 +51,7 @@ AutoIncBuildNr=0
 SyncProduct=1
 
 [Unit1]
-FileName=main_resp.c
+FileName=principal.c
 CompileCpp=0
 Folder=
 Compile=1
