@@ -94,9 +94,7 @@ int loadfile(int conex){
 						break;
    				
 			   }
-			 
-			   
-		  
+
 		  }while(resp!='b');
 	  		
 	  			}
@@ -106,8 +104,7 @@ int loadfile(int conex){
    					conex=readfile(con);  /*Si el archivo existe lee la configuración*/
    					
    					}
-	
-	     
+
 		 Sleep(100);
 			return conex;
 }
@@ -118,7 +115,6 @@ int loadfile(int conex){
 int testconex(int con){
 	
 	conn = mysql_init(NULL);
-	 
 	if (!mysql_real_connect(conn,server,user,password,database,0,NULL,0)){
 		
 		fprintf(stderr,"\n%s\n",mysql_error(conn));
@@ -130,9 +126,7 @@ int testconex(int con){
 		con=1;
 		Sleep(100);
 	} 		
- 		
  	
-	 	
 	 return con;
 }
 
@@ -191,9 +185,6 @@ int readfile(int con){
 		x++;	
 	    }
 	    
-	    
-
-	    
 	 printf("\nEstableciendo conexion con el server...\n");
  	 Sleep(1000);
  	 server = a;
@@ -201,22 +192,7 @@ int readfile(int con){
      password= c;
      database= d;
      
-	 conn = mysql_init(NULL);
-	 
-	if (!mysql_real_connect(conn,server,user,password,database,0,NULL,0)){
-		
-		fprintf(stderr,"\n%s\n",mysql_error(conn));
-		con=0;
-		Sleep(100);
-	}
-	else{
-		printf("\nConexion establecida...\n");
-		con=1;
-		Sleep(100);
-	} 		
- 		
- 	
-	 	
+	 con=testconex(con);	
 	 return con;	
 }
 
