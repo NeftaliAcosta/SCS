@@ -80,20 +80,14 @@ int loadfile(int conex){
    			printf("A=Crear archivo \t B.Salir");
    			printf("\nEsperando opcion: >");
    			resp=getche();
-   			
-   		
-		   	
-		   	
+  	
    			switch(resp){
-   				
    				case 'a':
 				   		conex=newfile(con); /*Si el archivo no existe se  manda a crear*/
 				   		resp='b';
-				   		
 				   		break;
 				case 'b':
 					 	resp='b';
-					 
 						break;
 				default:   	
 						printf("\nOpcion Invalida\n");
@@ -113,13 +107,34 @@ int loadfile(int conex){
    					
    					}
 	
-		
-		     
-		     
+	     
 		 Sleep(100);
 			return conex;
 }
 
+
+
+
+int testconex(int con){
+	
+	conn = mysql_init(NULL);
+	 
+	if (!mysql_real_connect(conn,server,user,password,database,0,NULL,0)){
+		
+		fprintf(stderr,"\n%s\n",mysql_error(conn));
+		con=0;
+		Sleep(100);
+	}
+	else{
+		printf("\nConexion establecida...\n");
+		con=1;
+		Sleep(100);
+	} 		
+ 		
+ 	
+	 	
+	 return con;
+}
 
 /*LEE LA CONFIGURACION DE CONEXION A LA BD*/
 int readfile(int con){
@@ -209,7 +224,7 @@ int readfile(int con){
 /*CREA ARCHIVO DE CONFIGURACION A LA BD*/
 int newfile(int con){
 	
-
+int cone;
 	  FILE *fp;
 	  system("cls");
 	  printf("\nCreando configuracion del Servidor\n");
@@ -225,39 +240,17 @@ int newfile(int con){
 
   	  fp = fopen ("config.txt", "w");
   	
-   			fprintf(fp, "%s\n%s\n%s\n%s\n",a,b,c,d);
-	  		 fclose(fp);
-	  		 printf("\n El archivo se creo correctamente\n");
-	  		 Sleep(1000);
-		   
-	  	 
+   	  fprintf(fp, "%s\n%s\n%s\n%s\n",a,b,c,d);
+	  fclose(fp);
+	  printf("\n El archivo se creo correctamente\n");
+	  Sleep(1000);
 	
      server = a;
      user = b;
      password= c;
      database= d;
-     
-    /* printf("\n%s\n",server);
-     printf("\n%s\n",user);
-     printf("\n%s\n",password);
-     printf("\n%s\n",database);
-	  system("pause");
-	  */
-	  
-	  
-	  	 conn = mysql_init(NULL);
-	 
-	if (!mysql_real_connect(conn,server,user,password,database,0,NULL,0)){
-		
-		fprintf(stderr,"\n%s\n",mysql_error(conn));
-		con=0;
-		system("pause");
-	}
-	else{
-		printf("\nConexion establecida...\n");
-		con=1;
-		Sleep(400);
-	} 		
+     	  
+		con=testconex(con);
  	
  	return con;
 }
@@ -278,7 +271,7 @@ menu(){ /*Inicio del nenú*/
 	printf("\t\t-----------MENU------------\n\n");
 
 	printf("\t\t---------------------------\n");
-	printf("\t\t a. Ingresar Registro	\n\t\t b. Registros \n\t\t c. Estadisticas \n\t\t x. Salir");
+	printf("\t\t a. Ingresar Registro	\n\t\t b. Registros \n\t\t c. Estadisticas \n\t\t d. Configuracion \n\t\t x. Salir");
 	printf("\n\t\t Esperando respuesta->");
 	resp=getche();
 	
