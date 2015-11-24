@@ -117,12 +117,13 @@ int testconex(int con){
 	conn = mysql_init(NULL);
 	if (!mysql_real_connect(conn,server,user,password,database,0,NULL,0)){
 		
-		fprintf(stderr,"\n%s\n",mysql_error(conn));
+		/*fprintf(stderr,"\n%s\n",mysql_error(conn));*/
+		printf("\n La conexion al servidor fallo :( ...\n");
 		con=0;
 		Sleep(100);
 	}
 	else{
-		printf("\nConexion establecida...\n");
+		printf("\nConexion establecida D: ... \n");
 		con=1;
 		Sleep(100);
 	} 		
@@ -185,7 +186,7 @@ int readfile(int con){
 		x++;	
 	    }
 	    
-	 printf("\nEstableciendo conexion con el server...\n");
+	 printf("\nIntentando conexion con el seridor...\n");
  	 Sleep(1000);
  	 server = a;
      user = b;
@@ -218,7 +219,7 @@ int cone;
   	
    	  fprintf(fp, "%s\n%s\n%s\n%s\n",a,b,c,d);
 	  fclose(fp);
-	  printf("\n El archivo se creo correctamente\n");
+	  printf("\n El archivo se creo correctamente...\n");
 	  Sleep(1000);
 	
      server = a;
@@ -232,10 +233,11 @@ int cone;
 }
 
 
-menu(){ /*Inicio del nenú*/
+menu(int conex){ /*Inicio del nenú*/
 
  char resp;
-	int consul;
+ int consul;
+ int con;
 	
 
 	
@@ -272,9 +274,20 @@ menu(){ /*Inicio del nenú*/
 				system("pause");
 				break;
 				
+		case 'd':
+				system("cls");	
+				conex=newfile(con); /*Sobre escribe el archivo config y leeo la conexion*/
+		
+				if (conex==0){ /*Valido si la conexión fue exitosa, si no es exitosa salgo del programa*/
+					resp='x';
+				}
+				system("pause");
+				break;
+				
 		case 'x':
 				system("cls");
-				break;			
+				break;	
+					
 				
 		default:
 				system("cls");
